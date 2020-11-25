@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-const Card : React.FC = () => {
+const StyledCard = styled.article`
+	background: #E9F1F5;
+	width: 100%;
+	border-top-right-radius: 1em;
+	border-top-left-radius: 1em;
+	height: 100vh;
+`
+const Card : React.FC<Props> = (props) => {
 	return (
-		<section>
-			<div>
-				Hi it's me the card
-			</div>
-		</section>
+		<StyledCard>
+				{props.children}
+		</StyledCard>
 	)
 }
 
+interface Props {
+	children: Object[]
+}
 export default Card;

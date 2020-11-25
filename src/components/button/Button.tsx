@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-	color: red;
+	background: #7BEBB3;
 	`;
 
 	const Button : React.FC = () => {
 		return (
 			<StyledButton>
-				I'm the button
+				Button!
 			</StyledButton>
 		)
 	}
