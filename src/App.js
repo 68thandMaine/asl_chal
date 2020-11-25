@@ -1,13 +1,12 @@
-
 import './App.css';
+import './tailwind.css';
+import DashboardContainer from './containers/DashboardContainer'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-				<p>Hi</p>
-      </header>
-    </div>
+			<div className="App">
+				<DashboardContainer />
+			</div>
   );
 }
 
