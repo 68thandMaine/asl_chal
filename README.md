@@ -6,7 +6,11 @@ This application
 
 ## Tech Design
 
-### Feature 1: 
+### Feature 1: Theme
+
+- Added Styled components to project
+- Added Tailwind CSS to the project
+	- Will help by adding styling utilities for responsive design, spacing, etc.
 
 ### Feature 2: 
 
