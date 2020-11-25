@@ -1,11 +1,20 @@
-import React from 'react';
-import Card from '../card/Card';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
+import { Map }from 'leaflet';
 
-const Map : React.FC = () => {
+interface MapProps {
+	data?: object
+}
+
+
+
+function MapContainer(props: MapProps) {
+	
+	
+	
 	return (
 		<figure>
-			I'm the map
+			It's just me the maps
 		</figure>
 	);
 }
-export default Map;
+export default MapContainer;
