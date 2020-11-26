@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Controls from '../components/controls/Controls';
-import MapContainer from '../components/map/Map';
+import LeafletMap from '../components/map/LeafletMap';
 import Button from '../components/button/Button';
 
 
@@ -11,12 +11,11 @@ const mapData = {
 }
 
 
-const DashboardContainer: React.FC = () => {
+function DashboardContainer () {
 	return (
 		<section className={"grid grid-rows-5 h-full md:grid-cols-5"}>
 			<div className={"row-span-4 md:col-span-4"}>
-				<MapContainer
-				 	data={mapData}/>
+				<LeafletMap />
 			</div>
 			<div className={"row-span-1 md:col-span-1 md:h-screen "}>
 				<Controls />
