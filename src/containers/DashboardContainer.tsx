@@ -1,19 +1,16 @@
 import React from 'react';
+import LeafletMap from '../components/map/LeafletMap';
+import { LatLngTuple } from 'leaflet';
+import data from '../assets/geoJsonData'
 
-import Controls from '../components/controls/Controls'
-import Map from '../components/map/Map'
-import Button from '../components/button/Button'
+const dmtCoords: LatLngTuple = [42.2161722, -83.3553842];
 
-const DashboardContainer: React.FC = () => {
+function DashboardContainer () {
 	return (
-		<section className={"grid grid-rows-5 h-full md:grid-cols-5"}>
-			<div className={"row-span-4 md:col-span-4"}>
-				<Map />
-			</div>
-			<div className={"row-span-1 md:col-span-1 md:h-screen "}>
-				<Controls />
-				<Button />
-			</div>
+		<section>
+			<LeafletMap
+				geoJsonData={data}
+				mapStartCoordinates={dmtCoords} />
 		</section>
 	)
 }
