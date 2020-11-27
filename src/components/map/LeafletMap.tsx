@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
@@ -15,11 +15,13 @@ interface LeafletMapProps {
 }
 
 const LeafletMap = (props: LeafletMapProps) => {
+	const ref = useRef<HTMLDivElement>(null);
 	return (
 		<StyledMapContainer
 			center={props.mapStartCoordinates}
 			zoom={13}
 			scrollWheelZoom={false}
+			
 		>
 		<TileLayer
 			attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
