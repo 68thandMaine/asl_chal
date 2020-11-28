@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import L from 'leaflet';
+import L, { featureGroup } from 'leaflet';
 import 'leaflet-draw';
 import styled from 'styled-components';
 import geojsonFeature from '../../assets/geoJsonData';
@@ -8,6 +8,11 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: 720px;
 `;
+
+
+
+
+
 
 function LeafletMap() {
 	useEffect(() => {
@@ -26,17 +31,56 @@ function LeafletMap() {
 			maxZoom: 20,
 		}).addTo(map);
 
-		// Polygon
+		// geojson data
 		L.geoJSON(geojsonFeature).addTo(map);
 
+    var editableLayers = new L.FeatureGroup();
+    map.addLayer(editableLayers);
 		// Draw Control
+		
+		let options : L.Control.DrawConstructorOptions  = {
+			position: 'topleft',
+			draw: {
+					polyline: {
+							shapeOptions: {
+									color: '#f357a1',
+									weight: 10
+							}
+					},
+					polygon:
+					 {
+							allowIntersection: false, // Restricts shapes to simple polygons
+							drawError: {
+									color: '#e1e100', // Color the shape will turn when intersects
+									message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+							},
+							shapeOptions: {
+									color: '#bada55'
+							}
+					},
+					circle: false, // Turns off this drawing tool
+					rectangle: false,
+					marker: false,
+					circlemarker: false,
+			},
+			edit: {
+				featureGroup: editableLayers,
+				remove: false,
+			},
+		}
 
-		const drawControl = new L.Control.Draw({position: "topleft"})
+		let drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
+
+		let drawControl = new L.Control.Draw(options);
 		map.addControl(drawControl);
-		// const drawn_items = L.featureGroup().addTo(map);
-		// const layer_group = L.featureGroup().addTo(map);
+		
 
-
+		map.on(L.Draw.Event.CREATED, (e) => {
+			if(e.type === "draw:created") {
+				editableLayers.addLayer(e.layer)
+			}
+		})
 	});
 
 	return (
