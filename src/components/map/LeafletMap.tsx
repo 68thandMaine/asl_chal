@@ -1,37 +1,47 @@
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
+import L from 'leaflet';
+import 'leaflet-draw';
 import styled from 'styled-components';
+import geojsonFeature from '../../assets/geoJsonData';
 
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+const Wrapper = styled.div`
+	width: 100%;
+	height: 720px;
+`;
 
-import { GeoJsonObject } from 'geojson';
-import { LatLngTuple } from 'leaflet';
+function LeafletMap() {
+	useEffect(() => {
 
-const StyledMapContainer = styled(MapContainer)`
-	height: 90vh
-`
-interface LeafletMapProps {
-	geoJsonData : GeoJsonObject,
-	mapStartCoordinates: LatLngTuple
-}
+		// Map
+		let map = L.map('map', {
+			center: [42.216, -83.355],
+			zoom: 12.5,
+			zoomControl: false,
+			scrollWheelZoom: false,
+		});
 
-const LeafletMap = (props: LeafletMapProps) => {
-	const ref = useRef<HTMLDivElement>(null);
+		// Map drawing
+		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+			detectRetina: true,
+			maxZoom: 20,
+		}).addTo(map);
+
+		// Polygon
+		L.geoJSON(geojsonFeature).addTo(map);
+
+		// Draw Control
+
+		const drawControl = new L.Control.Draw({position: "topleft"})
+		map.addControl(drawControl);
+		// const drawn_items = L.featureGroup().addTo(map);
+		// const layer_group = L.featureGroup().addTo(map);
+
+
+	});
+
 	return (
-		<StyledMapContainer
-			center={props.mapStartCoordinates}
-			zoom={13}
-			scrollWheelZoom={false}
-			
-		>
-		<TileLayer
-			attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-			url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-		/>
-	  <GeoJSON
-			data={props.geoJsonData}
-			/>
-		</StyledMapContainer>
+		<Wrapper id="map" />
 	)
-};
+}
 
 export default LeafletMap;
