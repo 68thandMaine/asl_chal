@@ -1,4 +1,4 @@
-export default const geoJsonData: GeoJSON.FeatureCollection<any> = {
+const geoJsonData: GeoJSON.FeatureCollection<any> = {
 	type: "FeatureCollection",
 	features: [
 		{
@@ -46,3 +46,5 @@ export default const geoJsonData: GeoJSON.FeatureCollection<any> = {
 		}
 	]
 }
+
+export default geoJsonData;

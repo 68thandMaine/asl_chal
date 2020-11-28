@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
 import './tailwind.css';
-import DashboardContainer from './containers/DashboardContainer';
+import LeafletMap from './components/map/LeafletMap';
+import L from 'leaflet';
 
 function App() {
   return (
-		<DashboardContainer />			
+		<LeafletMap />
   );
 }
 
