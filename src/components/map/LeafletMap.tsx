@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
-import L, { featureGroup } from 'leaflet';
+import React, { useState, useEffect } from 'react';
+import L, { point } from 'leaflet';
 import 'leaflet-draw';
+import  { lineIntersect, lineString, polygon } from '@turf/turf';
 import styled from 'styled-components';
-import geojsonFeature from '../../assets/geoJsonData';
+
+import geoJsonData from '../../assets/geoJsonData';
+const dmaCoords = geoJsonData.features[0].geometry.coordinates[0];
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -10,13 +13,11 @@ const Wrapper = styled.div`
 `;
 
 
-
-
-
-
 function LeafletMap() {
-	useEffect(() => {
+	const [ intersect, setIntersect ] = useState<boolean>(false);
 
+
+	useEffect(() => {
 		// Map
 		let map = L.map('map', {
 			center: [42.216, -83.355],
@@ -32,7 +33,7 @@ function LeafletMap() {
 		}).addTo(map);
 
 		// geojson data
-		L.geoJSON(geojsonFeature).addTo(map);
+		L.geoJSON(geoJsonData).addTo(map);
 
     var editableLayers = new L.FeatureGroup();
     map.addLayer(editableLayers);
@@ -45,7 +46,10 @@ function LeafletMap() {
 							shapeOptions: {
 									color: '#f357a1',
 									weight: 10
-							}
+							},
+							showLength: false,
+							metric: false,
+							feet: false,
 					},
 					polygon:
 					 {
@@ -69,18 +73,26 @@ function LeafletMap() {
 			},
 		}
 
-		let drawnItems = new L.FeatureGroup();
-		map.addLayer(drawnItems);
+		let droneFlightLayer = new L.FeatureGroup();
+		map.addLayer(droneFlightLayer);
 
 		let drawControl = new L.Control.Draw(options);
 		map.addControl(drawControl);
-		
 
-		map.on(L.Draw.Event.CREATED, (e) => {
-			if(e.type === "draw:created") {
-				editableLayers.addLayer(e.layer)
+		
+		map.on(L.Draw.Event.CREATED, (e : any) => {
+			
+			editableLayers.addLayer(e.layer)
+			let leafletLayer: any = editableLayers.toGeoJSON();
+			let pointCoords = leafletLayer.features[0].geometry.coordinates;
+			let intersection = lineIntersect(lineString(dmaCoords), lineString(pointCoords));
+			
+			if(intersection.features && intersection.features.length !== 0) {
+				// setIntersect(true)
 			}
-		})
+		});
+		
+		console.log(intersect)
 	});
 
 	return (
