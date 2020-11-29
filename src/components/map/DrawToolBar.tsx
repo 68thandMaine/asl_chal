@@ -2,8 +2,13 @@ import React, { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 
+// interface DrawToolBar {
+// 	drawCreate: 
+// }
+
 function DrawToolBar(props:any) {
 	const map = useMap();
+
 	useEffect(()=> {
 		let leafletDrawControl : L.Control.DrawConstructorOptions = {
 			position: 'topleft',
@@ -11,7 +16,7 @@ function DrawToolBar(props:any) {
 					polyline: {
 							shapeOptions: {
 									color: '#f357a1',
-									weight: 10
+									weight: 2
 							},
 							showLength: false,
 							metric: false,
@@ -28,14 +33,18 @@ function DrawToolBar(props:any) {
 									color: '#bada55'
 							}
 					},
-					circle: false, // Turns off this drawing tool
+					circle: false,
 					rectangle: false,
 					marker: false,
 					circlemarker: false,
 			},
 		}
 		let control = new L.Control.Draw(leafletDrawControl);
-		map.addControl(control)
+		map.addControl(control);
+
+		map.on(L.Draw.Event.CREATED, (e) => {
+			props.drawCreate(e);
+		})
 	})
 	return (
 		<></>
