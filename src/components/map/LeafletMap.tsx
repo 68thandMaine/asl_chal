@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import styled from 'styled-components';
 import 'leaflet-draw';
 import geoJsonData from '../../assets/geoJsonData';
-import DrawToolBar from '../DrawToolBar';
+import DrawToolBar from './DrawToolBar';
 
 const MapWrapper= styled(MapContainer)`
 	height: 720px;

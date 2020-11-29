@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import './tailwind.css';
-import LeafletMap from './components/map/LeafletMap3';
+import LeafletMap from './components/map/LeafletMap';
 
 function App() {
   return (
