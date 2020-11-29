@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, FeatureGroup } from 'react-leaflet';
 import styled from 'styled-components';
 import 'leaflet-draw';
 import DrawToolBar from './DrawToolBar';
@@ -13,15 +13,16 @@ const MapWrapper= styled(MapContainer)`
 	width: 100%;
 `;
 
-function LeafletMap(props:any) {
-	const { showNotification } = props;
+interface ILeafletMap {
+	showNotification: (message: string) => void
+}
 
-	function onDrawCreate(evnt : any) {
-		const layer = evnt.layer.toGeoJSON();
-		const layerCoordinates = layer.geometry.coordinates;
-		const intersection = lineIntersect(lineString(airportCoordinates), lineString(layerCoordinates));
+const LeafletMap: React.FC<ILeafletMap> = ({ showNotification }) => {
 
-		intersection.features.length > 1 ? createNotification(false) : createNotification(true);
+	function onRecieveDrawData(evnt : any) {
+
+		console.log(evnt)
+		
 	}
 
 	function createNotification(intersect: boolean) {
@@ -42,9 +43,10 @@ function LeafletMap(props:any) {
 			<GeoJSON
 				data = {geoJsonData}
 			/>
-			<DrawToolBar 
-				drawCreate={onDrawCreate}
-			/>
+			<FeatureGroup>
+				<DrawToolBar
+					determineNotification={onRecieveDrawData} />
+			</FeatureGroup>
 		</MapWrapper>
 	)
 }
