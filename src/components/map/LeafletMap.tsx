@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, GeoJSON, FeatureGroup, useMap } from 'react-leaflet';
+import React from 'react';
+import { MapContainer, TileLayer, GeoJSON, FeatureGroup } from 'react-leaflet';
 import styled from 'styled-components';
 import 'leaflet-draw';
 import DrawToolBar from './DrawToolBar';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import './tailwind.css';
 
@@ -18,7 +18,6 @@ function App() {
 	}
 
 	function onShowNotification(approval: boolean, area?: string) {
-		console.log("approval: ", approval)
 		let msg = approval ? "Good news! Your flight has been approved." : `Your flight breaches about ${area} kms of controlled airspace. Please try to find another route.`;
 		setShowNotification(true);
 		setNotificationMessage(msg);
