@@ -4,7 +4,7 @@ import 'leaflet-draw';
 import  { lineIntersect, lineString, polygon } from '@turf/turf';
 import styled from 'styled-components';
 
-import geoJsonData from '../../assets/geoJsonData';
+import geoJsonData from '../../common/geoJsonData';
 const dmaCoords = geoJsonData.features[0].geometry.coordinates[0];
 
 const Wrapper = styled.div`
