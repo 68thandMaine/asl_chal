@@ -19,16 +19,17 @@ interface ILeafletMap {
 const LeafletMap: React.FC<ILeafletMap> = ({ createNotification, closeNotification }) => {
 	
 	function onReceiveData(data: FeatureCollection) {
-		const { features } = data;
-		(features.length !== 0 ) ? createNotification(false) : createNotification(true)
+		(data !== null ) ? createNotification(false) : createNotification(true)
 	}
 
 	return (
 		<MapWrapper
 			center={[42.216, -83.355]}
 			zoom={12}
-			zoomControl={false}
-			scrollWheelZoom={false}
+			zoomControl={true}
+			scrollWheelZoom={true}
+			touchZoom={false}
+			doubleClickZoom={false}
 		>
 			<TileLayer
 				url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" 

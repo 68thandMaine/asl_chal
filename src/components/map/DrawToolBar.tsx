@@ -6,7 +6,7 @@ import 'leaflet-draw';
 import { findIntersection } from '../../utils/TurfUtils';
 import { GeoJsonProperties } from 'geojson';
 import geoJSONData from '../../assets/geoJsonData';
-const dmaCoords = geoJSONData.features[0].geometry.coordinates[0];
+const dmaCoords = geoJSONData.features[0].geometry.coordinates;
 
 
 function getControlOptions(editableLayer : any): Control.DrawConstructorOptions {
@@ -14,15 +14,16 @@ function getControlOptions(editableLayer : any): Control.DrawConstructorOptions 
 		{
 			position: 'topleft',
 			draw: {
-					polyline: {
-							shapeOptions: {
-									color: '#f357a1',
-									weight: 7
-							},
-							showLength: false,
-							metric: false,
-							feet: false,
-					},
+					polyline:false,
+					// polyline: {
+					// 		shapeOptions: {
+					// 				color: '#f357a1',
+					// 				weight: 7
+					// 		},
+					// 		showLength: false,
+					// 		metric: false,
+					// 		feet: false,
+					// },
 					polygon:
 					 {
 							allowIntersection: false, // Restricts shapes to simple polygons
@@ -60,11 +61,15 @@ function DrawToolbar({determineNotification, closeNotification}:IDrawToolbar) {
 	
 	const [drawn, setDrawn] = useState<boolean>(false);
 	useEffect(() => {
+		let intersection
 		if(drawn) {
-			const intersection = findIntersection(controlRef.current, dmaCoords)
+			 intersection = findIntersection(controlRef.current, dmaCoords)
 			determineNotification(intersection)
 		}
-	}, [drawn, determineNotification]);
+		if(intersection !== null) {
+			// container.addLayer(intersection)
+		}
+	}, [drawn, determineNotification] );
 	
 	const controlRef = useRef<Layer | any>();
 	useEffect(() => {	
