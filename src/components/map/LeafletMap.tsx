@@ -8,7 +8,7 @@ import { getArea } from '../../utils/TurfUtils';
 import geoJsonData from '../../assets/geoJsonData';
 
 const MapWrapper= styled(MapContainer)`
-	height: 720px;
+	height: 100vh;
 	width: 100%;
 `;
 
@@ -30,10 +30,10 @@ const LeafletMap: React.FC<ILeafletMap> = ({ createNotification, closeNotificati
 
 	return (
 		<MapWrapper
-			center={[42.216, -83.355]}
-			zoom={12}
+			center={[42.197, -83.349]}
+			zoom={13}
 			zoomControl={true}
-			scrollWheelZoom={true}
+			scrollWheelZoom={false}
 			touchZoom={false}
 			doubleClickZoom={false}
 		>

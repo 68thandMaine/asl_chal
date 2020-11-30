@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+	import React, { useState } from 'react';
 import './App.css';
 import './tailwind.css';
 
 import LeafletMap from './components/map/LeafletMap';
 import Notification from './components/notification/Notification';
+import Dashboard from './containers/Dashboard';
 
 function App() {
 	const [showNotification, setShowNotification] = useState<boolean>(false)
@@ -24,13 +25,16 @@ function App() {
 	}
 
 	return (
-		<>
-			<LeafletMap 
-				createNotification={onShowNotification}
-				closeNotification={setShowNotification}
-			/>
-			{showNotification && renderNotification()}
-		</>
+		<Dashboard
+			leftPane={
+				<LeafletMap 
+					createNotification={onShowNotification}
+					closeNotification={setShowNotification}
+				/>
+			}
+			rightPane={renderNotification()}
+		>
+		</Dashboard>
   );
 }
 
