@@ -54,3 +54,8 @@ p {
 		background-color: #84A9BF;
 		border-radius: 2px,
 }
+
+#leafletMap__wrapper {
+	height: 100vh;
+	width: 100%;
+}

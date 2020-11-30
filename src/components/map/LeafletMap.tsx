@@ -1,54 +1,57 @@
 import React from 'react';
 import { MapContainer, TileLayer, GeoJSON, FeatureGroup } from 'react-leaflet';
-import styled from 'styled-components';
 import 'leaflet-draw';
 import DrawToolBar from './DrawToolBar';
 import { FeatureCollection } from '@turf/turf';
 import { getArea } from '../../utils/TurfUtils';
-import geoJsonData from '../../assets/geoJsonData';
+import { LatLng } from 'leaflet';
 
-const MapWrapper= styled(MapContainer)`
-	height: 100vh;
-	width: 100%;
-`;
-
-interface ILeafletMap {
+type LeafletMapProps = {
 	createNotification: (approval: boolean, area?: string) => void;
-	closeNotification: (bool :boolean) => void
+	closeNotification: () => void;
+	mapCoordinates: LatLng;
+	mapUrl: string;
+	controlledAirspace: GeoJSON.FeatureCollection
 }
 
-const LeafletMap: React.FC<ILeafletMap> = ({ createNotification, closeNotification }) => {
+const LeafletMap: React.FC<LeafletMapProps> = ({ 
+	createNotification,
+	closeNotification,
+	controlledAirspace,
+	mapCoordinates,
+	mapUrl,
+}) => {
 	
 	function onReceiveData(data: FeatureCollection) {
-		console.log("onReceiveData ", data)
 		if (data !== null ) {
 			createNotification(false, getArea(data))
 		} else {
-			createNotification(true)
 		}
 	}
-
+	
+	
 	return (
-		<MapWrapper
-			center={[42.197, -83.349]}
+		<MapContainer
+			center={mapCoordinates}
 			zoom={13}
 			zoomControl={true}
 			scrollWheelZoom={false}
 			touchZoom={false}
 			doubleClickZoom={false}
+			id="leafletMap__wrapper"
 		>
 			<TileLayer
-				url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" 
+				url={mapUrl} 
 			/>
 			<GeoJSON
-				data = {geoJsonData}
+				data={controlledAirspace}
 			/>
 			<FeatureGroup>
 				<DrawToolBar
 					determineNotification={onReceiveData}
-					closeNotification={closeNotification} />
+				/>
 			</FeatureGroup>
-		</MapWrapper>
+		</MapContainer>
 	)
 }
 

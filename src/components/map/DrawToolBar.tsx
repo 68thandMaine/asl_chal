@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Draw, Control, Layer } from 'leaflet';
 import { createControlComponent, useLeafletContext } from '@react-leaflet/core';
 import { useMap } from 'react-leaflet';
 import 'leaflet-draw';
 import { findIntersection } from '../../utils/TurfUtils';
 import { GeoJsonProperties } from 'geojson';
-import geoJSONData from '../../assets/geoJsonData';
+import geoJSONData from '../../common/geoJsonData';
 const dmaCoords = geoJSONData.features[0].geometry.coordinates;
 
 
@@ -41,43 +41,29 @@ function getControlOptions(editableLayer : any): Control.DrawConstructorOptions 
 
 interface IDrawToolbar {
 	determineNotification(intersection: GeoJsonProperties): any ;
-	closeNotification: (bool: boolean) => void;
 }
 
-function DrawToolbar({determineNotification, closeNotification}:IDrawToolbar) {
+function DrawToolbar({determineNotification}:IDrawToolbar) {
 	const context = useLeafletContext();
 	const container = context.layerContainer || context.map;
 	const map = useMap();
 	const DrawControl = createControlComponent(() => new Control.Draw(getControlOptions(container)));
-	
-	const [drawn, setDrawn] = useState<boolean>(false);
-	useEffect(() => {
-		let intersection
-		if(drawn) {
-			 intersection = findIntersection(controlRef.current, dmaCoords)
-			determineNotification(intersection)
-		}
-	}, [drawn, determineNotification] );
-	
 	const controlRef = useRef<Layer | any>();
+	
 	useEffect(() => {	
 		map.on(Draw.Event.CREATED, (e) => {
 			controlRef.current = e.layer;
 			if (controlRef.current !== null) {
 				container.addLayer(controlRef.current);
-				setDrawn(true)
+				let intersection = findIntersection(controlRef.current, dmaCoords)
+				determineNotification(intersection)
 			}
 		})
-	}, [controlRef, map, container]);
-	
-	useEffect(() => {
+
 		map.on(Draw.Event.TOOLBAROPENED, (e) => {
 			container.removeLayer(controlRef.current);
-			setDrawn(false)
-			closeNotification(false)
-		})
-	}, [map, container, closeNotification])
-	
+		});
+	}, [controlRef, map, container, determineNotification]);
 	
 	return <DrawControl/>
 }
