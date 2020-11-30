@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import 'leaflet-draw';
 import DrawToolBar from './DrawToolBar';
 import { FeatureCollection } from '@turf/turf';
+import { getArea } from '../../utils/TurfUtils';
 import geoJsonData from '../../assets/geoJsonData';
 
 const MapWrapper= styled(MapContainer)`
@@ -12,14 +13,19 @@ const MapWrapper= styled(MapContainer)`
 `;
 
 interface ILeafletMap {
-	createNotification: (approval: boolean) => void;
+	createNotification: (approval: boolean, area?: string) => void;
 	closeNotification: (bool :boolean) => void
 }
 
 const LeafletMap: React.FC<ILeafletMap> = ({ createNotification, closeNotification }) => {
 	
 	function onReceiveData(data: FeatureCollection) {
-		(data !== null ) ? createNotification(false) : createNotification(true)
+		console.log("onReceiveData ", data)
+		if (data !== null ) {
+			createNotification(false, getArea(data))
+		} else {
+			createNotification(true)
+		}
 	}
 
 	return (

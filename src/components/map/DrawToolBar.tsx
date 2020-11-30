@@ -15,15 +15,6 @@ function getControlOptions(editableLayer : any): Control.DrawConstructorOptions 
 			position: 'topleft',
 			draw: {
 					polyline:false,
-					// polyline: {
-					// 		shapeOptions: {
-					// 				color: '#f357a1',
-					// 				weight: 7
-					// 		},
-					// 		showLength: false,
-					// 		metric: false,
-					// 		feet: false,
-					// },
 					polygon:
 					 {
 							allowIntersection: false, // Restricts shapes to simple polygons
@@ -66,9 +57,6 @@ function DrawToolbar({determineNotification, closeNotification}:IDrawToolbar) {
 			 intersection = findIntersection(controlRef.current, dmaCoords)
 			determineNotification(intersection)
 		}
-		if(intersection !== null) {
-			// container.addLayer(intersection)
-		}
 	}, [drawn, determineNotification] );
 	
 	const controlRef = useRef<Layer | any>();
@@ -88,7 +76,7 @@ function DrawToolbar({determineNotification, closeNotification}:IDrawToolbar) {
 			setDrawn(false)
 			closeNotification(false)
 		})
-	})
+	}, [map, container, closeNotification])
 	
 	
 	return <DrawControl/>
