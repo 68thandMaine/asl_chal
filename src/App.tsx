@@ -17,8 +17,9 @@ function App() {
 		)
 	}
 
-	function onShowNotification(approval: boolean) {
-		let msg = approval ? "Good news! Your flight has been approved." : "Your flight enters controlled airspace. Try finding another route.";
+	function onShowNotification(approval: boolean, area?: string) {
+		console.log("approval: ", approval)
+		let msg = approval ? "Good news! Your flight has been approved." : `Your flight breaches about ${area} kms of controlled airspace. Please try to find another route.`;
 		setShowNotification(true);
 		setNotificationMessage(msg);
 	}
