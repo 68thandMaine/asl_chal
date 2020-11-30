@@ -3,8 +3,6 @@ import  {
 	polygon, 
 	Feature,
 	area,
-	GeometryCollection,
-	FeatureCollection,
 } from '@turf/turf';
 import { convertArea } from '@turf/helpers';
 import { FeatureGroup } from 'leaflet';
