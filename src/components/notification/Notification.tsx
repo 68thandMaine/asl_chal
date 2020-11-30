@@ -6,7 +6,8 @@ interface INotification {
 }
 
 const StyledNotification = styled.section`
-	
+	background: white;
+	text-align: center;
 `;
 
 const Notification: React.FC<INotification> = (props) => {
