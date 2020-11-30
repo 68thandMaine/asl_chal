@@ -1,15 +1,12 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { Draw, Control, map, Layer } from 'leaflet';
+import React, { useEffect, useRef, useState } from 'react';
+import { Draw, Control, Layer } from 'leaflet';
 import { createControlComponent, useLeafletContext } from '@react-leaflet/core';
 import { useMap } from 'react-leaflet';
 import 'leaflet-draw';
 import { findIntersection } from '../../utils/TurfUtils';
+import { GeoJsonProperties } from 'geojson';
 import geoJSONData from '../../assets/geoJsonData';
-import { featureCollection, GeometryCollection } from '@turf/turf';
-import { FeatureCollection, GeoJsonProperties } from 'geojson';
 const dmaCoords = geoJSONData.features[0].geometry.coordinates[0];
-
-
 
 
 function getControlOptions(editableLayer : any): Control.DrawConstructorOptions {
@@ -20,7 +17,7 @@ function getControlOptions(editableLayer : any): Control.DrawConstructorOptions 
 					polyline: {
 							shapeOptions: {
 									color: '#f357a1',
-									weight: 2
+									weight: 7
 							},
 							showLength: false,
 							metric: false,
@@ -52,35 +49,41 @@ function getControlOptions(editableLayer : any): Control.DrawConstructorOptions 
 
 interface IDrawToolbar {
 	determineNotification(intersection: GeoJsonProperties): any ;
+	closeNotification: (bool: boolean) => void;
 }
 
-function DrawToolbar({determineNotification}:IDrawToolbar) {
-	const map = useMap();
+function DrawToolbar({determineNotification, closeNotification}:IDrawToolbar) {
 	const context = useLeafletContext();
-	const { layerContainer } = context;
-	const DrawControl = createControlComponent(() => new Control.Draw(getControlOptions(layerContainer)));
-	const controlRef = useRef<Layer | any>();
+	const container = context.layerContainer || context.map;
+	const map = useMap();
+	const DrawControl = createControlComponent(() => new Control.Draw(getControlOptions(container)));
 	
 	const [drawn, setDrawn] = useState<boolean>(false);
-	useEffect(() => {
-		const container = context.layerContainer || context.map;
-		map.on(Draw.Event.CREATED, (e) => {
-			controlRef.current = e.layer;
-			if (controlRef.current !== null) {
-			container.addLayer(controlRef.current);
-			setDrawn(true)
-			}
-		})
-	}, [controlRef, map, context]);
-
-	
 	useEffect(() => {
 		if(drawn) {
 			const intersection = findIntersection(controlRef.current, dmaCoords)
 			determineNotification(intersection)
 		}
-	}, [drawn]);
+	}, [drawn, determineNotification]);
 	
+	const controlRef = useRef<Layer | any>();
+	useEffect(() => {	
+		map.on(Draw.Event.CREATED, (e) => {
+			controlRef.current = e.layer;
+			if (controlRef.current !== null) {
+				container.addLayer(controlRef.current);
+				setDrawn(true)
+			}
+		})
+	}, [controlRef, map, container]);
+	
+	useEffect(() => {
+		map.on(Draw.Event.TOOLBAROPENED, (e) => {
+			container.removeLayer(controlRef.current);
+			setDrawn(false)
+			closeNotification(false)
+		})
+	})
 	
 	
 	return <DrawControl/>

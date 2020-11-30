@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, GeoJSON, FeatureGroup } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, GeoJSON, FeatureGroup, useMap } from 'react-leaflet';
 import styled from 'styled-components';
 import 'leaflet-draw';
 import DrawToolBar from './DrawToolBar';
-import { lineIntersect, lineString } from '@turf/turf';
-
+import { FeatureCollection } from '@turf/turf';
 import geoJsonData from '../../assets/geoJsonData';
-const airportCoordinates = geoJsonData.features[0].geometry.coordinates[0];
 
 const MapWrapper= styled(MapContainer)`
 	height: 720px;
@@ -14,22 +12,17 @@ const MapWrapper= styled(MapContainer)`
 `;
 
 interface ILeafletMap {
-	showNotification: (message: string) => void
+	createNotification: (approval: boolean) => void;
+	closeNotification: (bool :boolean) => void
 }
 
-const LeafletMap: React.FC<ILeafletMap> = ({ showNotification }) => {
-
-	function onRecieveDrawData(evnt : any) {
-
-		console.log(evnt)
-		
-	}
-
-	function createNotification(intersect: boolean) {
-		let msg = intersect ? "Good news! Your flight has been approved." : "Your flight enters controlled airspace. Try finding another route."
-		showNotification(msg);
-	}
+const LeafletMap: React.FC<ILeafletMap> = ({ createNotification, closeNotification }) => {
 	
+	function onReceiveData(data: FeatureCollection) {
+		const { features } = data;
+		(features.length !== 0 ) ? createNotification(false) : createNotification(true)
+	}
+
 	return (
 		<MapWrapper
 			center={[42.216, -83.355]}
@@ -45,7 +38,8 @@ const LeafletMap: React.FC<ILeafletMap> = ({ showNotification }) => {
 			/>
 			<FeatureGroup>
 				<DrawToolBar
-					determineNotification={onRecieveDrawData} />
+					determineNotification={onReceiveData}
+					closeNotification={closeNotification} />
 			</FeatureGroup>
 		</MapWrapper>
 	)
