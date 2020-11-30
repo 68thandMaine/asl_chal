@@ -1,34 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, GeoJSON, FeatureGroup, useMap } from 'react-leaflet';
 import styled from 'styled-components';
 import 'leaflet-draw';
 import DrawToolBar from './DrawToolBar';
-import { lineIntersect, lineString } from '@turf/turf';
-
+import { FeatureCollection } from '@turf/turf';
 import geoJsonData from '../../assets/geoJsonData';
-const airportCoordinates = geoJsonData.features[0].geometry.coordinates[0];
 
 const MapWrapper= styled(MapContainer)`
 	height: 720px;
 	width: 100%;
 `;
 
-function LeafletMap(props:any) {
-	const { showNotification } = props;
+interface ILeafletMap {
+	createNotification: (approval: boolean) => void;
+	closeNotification: (bool :boolean) => void
+}
 
-	function onDrawCreate(evnt : any) {
-		const layer = evnt.layer.toGeoJSON();
-		const layerCoordinates = layer.geometry.coordinates;
-		const intersection = lineIntersect(lineString(airportCoordinates), lineString(layerCoordinates));
-
-		intersection.features.length > 1 ? createNotification(false) : createNotification(true);
-	}
-
-	function createNotification(intersect: boolean) {
-		let msg = intersect ? "Good news! Your flight has been approved." : "Your flight enters controlled airspace. Try finding another route."
-		showNotification(msg);
-	}
+const LeafletMap: React.FC<ILeafletMap> = ({ createNotification, closeNotification }) => {
 	
+	function onReceiveData(data: FeatureCollection) {
+		const { features } = data;
+		(features.length !== 0 ) ? createNotification(false) : createNotification(true)
+	}
+
 	return (
 		<MapWrapper
 			center={[42.216, -83.355]}
@@ -42,9 +36,11 @@ function LeafletMap(props:any) {
 			<GeoJSON
 				data = {geoJsonData}
 			/>
-			<DrawToolBar 
-				drawCreate={onDrawCreate}
-			/>
+			<FeatureGroup>
+				<DrawToolBar
+					determineNotification={onReceiveData}
+					closeNotification={closeNotification} />
+			</FeatureGroup>
 		</MapWrapper>
 	)
 }

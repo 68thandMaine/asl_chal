@@ -6,6 +6,7 @@ import LeafletMap from './components/map/LeafletMap';
 import Notification from './components/notification/Notification';
 
 function App() {
+	const [showNotification, setShowNotification] = useState<boolean>(false)
 	const[notificationMessage, setNotificationMessage] = useState<string>("");
 	
 	const renderNotification = () => {
@@ -16,16 +17,19 @@ function App() {
 		)
 	}
 
-	const onShowNotification = (message: string) => {
-		setNotificationMessage(message);
+	function onShowNotification(approval: boolean) {
+		let msg = approval ? "Good news! Your flight has been approved." : "Your flight enters controlled airspace. Try finding another route.";
+		setShowNotification(true);
+		setNotificationMessage(msg);
 	}
 
 	return (
 		<>
 			<LeafletMap 
-				showNotification={onShowNotification}
+				createNotification={onShowNotification}
+				closeNotification={setShowNotification}
 			/>
-			{renderNotification()}
+			{showNotification && renderNotification()}
 		</>
   );
 }

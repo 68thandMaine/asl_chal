@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Draw, Control, Layer } from 'leaflet';
+import { createControlComponent, useLeafletContext } from '@react-leaflet/core';
 import { useMap } from 'react-leaflet';
-import L from 'leaflet';
+import 'leaflet-draw';
+import { findIntersection } from '../../utils/TurfUtils';
+import { GeoJsonProperties } from 'geojson';
+import geoJSONData from '../../assets/geoJsonData';
+const dmaCoords = geoJSONData.features[0].geometry.coordinates[0];
 
-// interface DrawToolBar {
-// 	drawCreate: 
-// }
 
-function DrawToolBar(props:any) {
-	const map = useMap();
-
-	useEffect(()=> {
-		let leafletDrawControl : L.Control.DrawConstructorOptions = {
+function getControlOptions(editableLayer : any): Control.DrawConstructorOptions {
+	return (
+		{
 			position: 'topleft',
 			draw: {
 					polyline: {
 							shapeOptions: {
 									color: '#f357a1',
-									weight: 2
+									weight: 7
 							},
 							showLength: false,
 							metric: false,
@@ -38,17 +39,54 @@ function DrawToolBar(props:any) {
 					marker: false,
 					circlemarker: false,
 			},
+			edit: {
+				featureGroup: editableLayer,
+				remove: false,
+			}
 		}
-		let control = new L.Control.Draw(leafletDrawControl);
-		map.addControl(control);
-
-		map.on(L.Draw.Event.CREATED, (e) => {
-			props.drawCreate(e);
-		})
-	})
-	return (
-		<></>
-	);
+	)
 }
 
-export default DrawToolBar;
+interface IDrawToolbar {
+	determineNotification(intersection: GeoJsonProperties): any ;
+	closeNotification: (bool: boolean) => void;
+}
+
+function DrawToolbar({determineNotification, closeNotification}:IDrawToolbar) {
+	const context = useLeafletContext();
+	const container = context.layerContainer || context.map;
+	const map = useMap();
+	const DrawControl = createControlComponent(() => new Control.Draw(getControlOptions(container)));
+	
+	const [drawn, setDrawn] = useState<boolean>(false);
+	useEffect(() => {
+		if(drawn) {
+			const intersection = findIntersection(controlRef.current, dmaCoords)
+			determineNotification(intersection)
+		}
+	}, [drawn, determineNotification]);
+	
+	const controlRef = useRef<Layer | any>();
+	useEffect(() => {	
+		map.on(Draw.Event.CREATED, (e) => {
+			controlRef.current = e.layer;
+			if (controlRef.current !== null) {
+				container.addLayer(controlRef.current);
+				setDrawn(true)
+			}
+		})
+	}, [controlRef, map, container]);
+	
+	useEffect(() => {
+		map.on(Draw.Event.TOOLBAROPENED, (e) => {
+			container.removeLayer(controlRef.current);
+			setDrawn(false)
+			closeNotification(false)
+		})
+	})
+	
+	
+	return <DrawControl/>
+}
+
+export default DrawToolbar;
