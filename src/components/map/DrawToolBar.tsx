@@ -17,13 +17,14 @@ function getControlOptions(editableLayer : any): Control.DrawConstructorOptions 
 					polyline:false,
 					polygon:
 					 {
-							allowIntersection: false, // Restricts shapes to simple polygons
+							allowIntersection: false,
 							drawError: {
-									color: '#e1e100', // Color the shape will turn when intersects
-									message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+									color: '#F2AB6D',
+									message: '<strong>Oh snap!<strong> you can\'t draw that!'
 							},
 							shapeOptions: {
-									color: '#bada55'
+									color: '#F2AB6D',
+									fillOpacity: 0.7
 							}
 					},
 					circle: false,
@@ -63,7 +64,9 @@ function DrawToolbar({determineNotification}:IDrawToolbar) {
 		map.on(Draw.Event.TOOLBAROPENED, (e) => {
 			container.removeLayer(controlRef.current);
 		});
+
 	}, [controlRef, map, container, determineNotification]);
+
 	
 	return <DrawControl/>
 }

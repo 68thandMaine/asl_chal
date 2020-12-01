@@ -6,7 +6,7 @@ const StyledButton = styled.button`
 	color:#fff;
 	border-radius: 2em;
 	outline: none;
-	width: 160px;
+	width: 300px;
 	margin: 1em;
 	&:focus {
 		outline: 0;

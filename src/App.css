@@ -5,6 +5,7 @@ html {
 }
 
 h1 {
+	font-size: 3rem !important;
 	font-weight: 500 !important;
 }
 
@@ -51,7 +52,7 @@ input::-webkit-inner-spin-button {
 
 .styledInput__number {
 	float: left;
-	width: 70% !important;
+	width: 100px !important;
 	align-items: center;
 }
 
@@ -60,6 +61,7 @@ input::-webkit-inner-spin-button {
 	content: "";
 	position: absolute;
 	left: -1em;
+	top: 36px;
 	display: inline-block;
 	width: 8px;	
 	background-color: #0378A6;
@@ -71,6 +73,7 @@ input::-webkit-inner-spin-button {
 	content: "";
 	position: absolute;
 	left: -1em;
+	top: 30px;
 	display: inline-block;
 	width: 8px;
 	background-color: #A6411C;

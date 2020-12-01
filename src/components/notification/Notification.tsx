@@ -5,9 +5,8 @@ import {INotification} from '../../common/types';
 const StyledNotification = styled.section`
 	border: solid 3px #0367A6;
 	border-radius: 1em;
-	padding: 2em;
+	padding: 1em 1.5em;
 	overflow: hidden;
-	display: flex;
 	justify-content: center;
 `;
 
@@ -20,6 +19,7 @@ const Notification: React.FC<NotificationProps> = ({ data }) => {
 	
 	return (
 		<StyledNotification>
+			<h3 className="block">Flight Status</h3>
 			{data.approve !== undefined && (
 				<div className="relative">
 					<p className={notificationType}>
