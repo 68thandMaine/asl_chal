@@ -3,35 +3,16 @@ html {
 }
 
 h1 {
-	font-size: 4rem;
 	font-weight: 500 !important;
-	margin: 1em 0 0.5em 0 !important;
 }
 
 h2 {
-	font-size: 2.9167rem;
-	margin: 0.5em 0 0.5em 0 !important;
+	font-size: 1.4rem !important;
 }
 
-h3 {
-	font-size: 2.5707rem;
-}
-
-h4 {
-	font-size: 1.8219rem;
-}
-
-h5 {
-	font-size: 1.3118 rem;
-}
-
-h6 {
-	font-size: 1.25 rem;
-}
-
-p {
+p, input {
 	color: inherit;
-	font-size: 1rem;
+	font-size: 1rem !important;
 }
 
 .styledMenu__title:after {
@@ -58,4 +39,15 @@ p {
 #leafletMap__wrapper {
 	height: 100vh;
 	width: 100%;
+}
+
+.styledInput__number {
+	float: left;
+	width: 70% !important;
+	align-items: center;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

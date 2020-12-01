@@ -3,25 +3,10 @@ import './App.css';
 import './tailwind.css';
 import LeafletMap from './components/map/LeafletMap';
 import Notification from './components/notification/Notification';
-import Dashboard from './containers/Dashboard';
+import Dashboard from './views/Dashboard';
 import Menu from './components/menu/Menu';
-import { LatLng } from 'leaflet';
 import initialState from './common/initialState';
-
-interface IStateMap {
-	map: {
-		startingCoordinates: LatLng
-		controlledAirspace: GeoJSON.FeatureCollection
-		mapUrl: string
-	}
-	notification: {
-		showNotification: boolean
-		notification: string
-	}
-}
-
-
-
+import { IStateMap } from './common/types';
 
 function App() {
 	let [state, setState] = useState<IStateMap>(initialState)
@@ -29,7 +14,7 @@ function App() {
 	const renderNotification = () => {
 		return (
 			<Notification
-				message={notificationMessage}
+				message={state.notification.message}
 			/>
 		)
 	}
@@ -39,7 +24,7 @@ function App() {
 		setState({
       ...state,
       notification: {
-        notification: msg,
+        message: msg,
 				showNotification: true	
       }
 		});
@@ -50,7 +35,7 @@ function App() {
 			...prevState,
 			notification: {
 				showNotification: false,
-				notification: "",
+				message: "",
 			}
 		}));
 	}
@@ -68,7 +53,7 @@ function App() {
 			}
 			rightPane={
 				<Menu
-
+					notificationData={state.notification}
 				/>
 			}
 		>
