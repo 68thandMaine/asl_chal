@@ -26,6 +26,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
 		if (data !== null ) {
 			createNotification(false, getArea(data))
 		} else {
+			createNotification(true)
 		}
 	}
 	
