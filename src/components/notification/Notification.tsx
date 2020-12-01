@@ -7,6 +7,8 @@ const StyledNotification = styled.section`
 	border-radius: 1em;
 	padding: 2em;
 	overflow: hidden;
+	display: flex;
+	justify-content: center;
 `;
 
 type NotificationProps = {
