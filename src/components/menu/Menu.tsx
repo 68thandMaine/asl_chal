@@ -45,7 +45,7 @@ const Menu: React.FC<MenuProps> = ({notificationData}) => {
 			</section>
 			</div>
 			<Notification 
-				message={notificationData.message}/>
+				data={notificationData}/>
 		</StyledMenu>
 	)
 }

@@ -1,3 +1,5 @@
+
+
 html {
 	font-size: 16px;
 }
@@ -13,6 +15,12 @@ h2 {
 p, input {
 	color: inherit;
 	font-size: 1rem !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .styledMenu__title:after {
@@ -31,7 +39,7 @@ p, input {
 		margin-right: 10px;
 		display: inline-block;
 		width: 8px;
-		height: 30px;
+		height: 100%;
 		background-color: #84A9BF;
 		border-radius: 2px,
 }
@@ -46,8 +54,31 @@ p, input {
 	width: 70% !important;
 	align-items: center;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+
+.notification__approve:before {
+	animation: slideDown 1.5s forwards;
+	content: "";
+	position: absolute;
+	left: -1em;
+	display: inline-block;
+	width: 8px;	
+	background-color: #0378A6;
+	border-radius: 2px;
+}
+
+.notification__deny:before {
+	animation: slideDown 1.5s forwards;
+	content: "";
+	position: absolute;
+	left: -1em;
+	display: inline-block;
+	width: 8px;
+	background-color: #A6411C;
+	border-radius: 2px;
+}
+
+.notification__message {
+	position: relative;
+	display: inline-block;
+	animation: slideRight 3s forwards;
 }
