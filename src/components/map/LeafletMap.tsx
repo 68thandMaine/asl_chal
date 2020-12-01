@@ -29,8 +29,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
 			createNotification(true)
 		}
 	}
-	
-	
+
 	return (
 		<MapContainer
 			center={mapCoordinates}

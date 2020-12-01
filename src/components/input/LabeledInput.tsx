@@ -4,7 +4,7 @@ import Label from './Label';
 import Input from './Input';
 
 const StyledLabeledInput = styled.div`
-	margin: 16px auto;
+	margin-top: 10px;
 `;
 
 type LabeledInputProps = {
