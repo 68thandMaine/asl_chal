@@ -6,4 +6,4 @@
 - Use the `useLeafletContext` method to access the map layers and use the layer in the Control options object.
 - Trigger specific event with effects when certain map events occur.
 
-### [Back to README](../README.md)
+### [Back to README](../README.md#features)

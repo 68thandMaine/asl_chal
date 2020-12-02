@@ -7,4 +7,4 @@
 - To display the actual image of the map use a `TileLayer` and pass it the url for the OpenStreets map.
 - Both the `MapContainer` and `TileLayer` components from `react-leaflet` use the same props as the leaflet elements would (map url, center coordinates, zoom, etc).
 
-### [Back to README](../README.md)
+### [Back to README](../README.md#features)

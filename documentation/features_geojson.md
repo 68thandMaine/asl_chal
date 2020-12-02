@@ -6,4 +6,4 @@
 - Import this file in `src/components/map/LeafletMap.tsx` to pass it to the geoJSON layer.
 - Declare a `<GeoJSON/>` compomnent from `react-leaflet`. This component consumes geoJSON coordinates and prints them to the DOM.
 
-### [Back to README](../README.md)
+### [Back to README](../README.md#features)
