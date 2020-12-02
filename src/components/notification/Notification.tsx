@@ -6,7 +6,7 @@ const StyledNotification = styled.section`
 	border: solid 3px #0367A6;
 	border-radius: 1em;
 	margin: 0.75em;
-	overflow: hidden;
+	overflow: scroll;
 	justify-content: center;
 `;
 
@@ -20,9 +20,9 @@ const Notification: React.FC<NotificationProps> = ({ data }) => {
 	return (
 		<StyledNotification>
 			<h3 className="block pt-4 px-5">Flight Status</h3>
-			<div className="flex flex-col h-1/2 justify-center my-8 relative px-8">
+			<div className="flex flex-col h-1/2 justify-center relative my-8 ml-10 pr-4">
 				{data.approve !== undefined && (
-						<p className={`notification__message ${notificationType}`}>
+						<p className={`notification__message relative ${notificationType}`}>
 								{data.message}
 						</p>
 				)}

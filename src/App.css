@@ -60,8 +60,8 @@ input::-webkit-inner-spin-button {
 	animation: slideDown 1.5s forwards;
 	content: "";
 	position: absolute;
-	left: -1em;
-	top: 36px;
+	left: -1em;	
+	top: -20px;
 	display: inline-block;
 	width: 8px;	
 	background-color: #0378A6;
@@ -73,7 +73,7 @@ input::-webkit-inner-spin-button {
 	content: "";
 	position: absolute;
 	left: -1em;
-	top: 30px;
+	top: -20px;
 	display: inline-block;
 	width: 8px;
 	background-color: #A6411C;
