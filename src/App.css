@@ -81,8 +81,5 @@ input::-webkit-inner-spin-button {
 }
 
 .notification__message {
-	position: relative;
-	text-align: justify;
-	top: 2em;
 	animation: slideRight 3s forwards;
 }

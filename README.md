@@ -24,7 +24,7 @@ ___
 
 > ### [This project is hosted on github pages and can viewed by clicking here.](https://68thandMaine.github.io/asl_chal)
 
-To run this project in a local environment run: 
+To run this project in a local environment run:
 
 - `$ git clone https://github.com/68thandMaine/asl_chal.git && cd asl_chal && npm i && npm run start`
 
