@@ -5,7 +5,7 @@ import {INotification} from '../../common/types';
 const StyledNotification = styled.section`
 	border: solid 3px #0367A6;
 	border-radius: 1em;
-	padding: 1em 1.5em;
+	margin: 0.75em;
 	overflow: hidden;
 	justify-content: center;
 `;
@@ -19,16 +19,14 @@ const Notification: React.FC<NotificationProps> = ({ data }) => {
 	
 	return (
 		<StyledNotification>
-			<h3 className="block">Flight Status</h3>
-			{data.approve !== undefined && (
-				<div className="relative">
-					<p className={notificationType}>
-						<span className="notification__message">
-							{data.message}
-						</span>
-					</p>
-				</div>
-			)}
+			<h3 className="block pt-4 px-5">Flight Status</h3>
+			<div className="flex flex-col h-1/2 justify-center my-8 relative px-8">
+				{data.approve !== undefined && (
+						<p className={`notification__message ${notificationType}`}>
+								{data.message}
+						</p>
+				)}
+			</div>
 		</StyledNotification>
 	)
 };

@@ -16,7 +16,7 @@ type DashboardProps ={
 const Dashboard: React.FC<DashboardProps> = ({ leftPane, rightPane }) => {
 
 	return (
-		<section className="grid grid-cols-7">
+		<section className="grid grid-rows-7 md:grid-cols-7">
 			<article className="col-span-4 lg:col-span-5 relative gap-0.5 z-0">
 				{leftPane}
 			</article>
