@@ -8,7 +8,6 @@ import { GeoJsonProperties } from 'geojson';
 import geoJSONData from '../../common/geoJsonData';
 const dmaCoords = geoJSONData.features[0].geometry.coordinates;
 
-
 function getControlOptions(editableLayer : any): Control.DrawConstructorOptions {
 	return (
 		{

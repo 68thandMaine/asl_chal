@@ -39,9 +39,9 @@ function App() {
 				<LeafletMap
 					mapCoordinates={state.map.startingCoordinates}
 					mapUrl={state.map.mapUrl}
+					controlledAirspace={state.map.controlledAirspace}
 					createNotification={onShowNotification}
 					closeNotification={onCloseNotification}
-					controlledAirspace={state.map.controlledAirspace}
 				/>
 			}
 			rightPane={
