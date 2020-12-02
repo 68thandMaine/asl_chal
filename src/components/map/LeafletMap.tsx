@@ -21,7 +21,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
 	mapCoordinates,
 	mapUrl,
 }) => {
-	
+
 	function onReceiveData(data: FeatureCollection) {
 		if (data !== null ) {
 			createNotification(false, getArea(data))
@@ -49,6 +49,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
 			<FeatureGroup>
 				<DrawToolBar
 					determineNotification={onReceiveData}
+					closeNotification={closeNotification}
 				/>
 			</FeatureGroup>
 		</MapContainer>

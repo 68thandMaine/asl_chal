@@ -41,13 +41,14 @@ function getControlOptions(editableLayer : any): Control.DrawConstructorOptions 
 
 interface IDrawToolbar {
 	determineNotification(intersection: GeoJsonProperties): any ;
+	closeNotification: () => void;
 }
 
-function DrawToolbar({determineNotification}:IDrawToolbar) {
+function DrawToolbar({determineNotification, closeNotification}:IDrawToolbar) {
 	const context = useLeafletContext();
 	const container = context.layerContainer || context.map;
-	const map = useMap();
 	const DrawControl = createControlComponent(() => new Control.Draw(getControlOptions(container)));
+	const map = useMap();
 	const controlRef = useRef<Layer | any>();
 	
 	useEffect(() => {	
@@ -64,7 +65,7 @@ function DrawToolbar({determineNotification}:IDrawToolbar) {
 			container.removeLayer(controlRef.current);
 		});
 
-	}, [controlRef, map, container, determineNotification]);
+	}, [controlRef, map, container, determineNotification, closeNotification]);
 
 	
 	return <DrawControl/>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import {INotification} from '../../common/types';
 
@@ -15,7 +15,19 @@ type NotificationProps = {
 }
 
 const Notification: React.FC<NotificationProps> = ({ data }) => {
-	let notificationType = data.approve ? "notification__approve" : "notification__deny";
+	const [notificationType, setNotificationType] = useState<string | null>(null);
+	
+	useEffect(() => {
+		if( data.approve || data.showNotification ) {
+			let { approve } = data;
+			let notification = approve ? "notification__approve" : "notification__deny";
+			setNotificationType(notification)
+		}
+		if(!data.showNotification && notificationType !== null) {
+			setNotificationType("notification__remove")
+		}
+	}, [data, notificationType])
+	 
 	
 	return (
 		<StyledNotification>
