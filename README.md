@@ -1,6 +1,6 @@
 # Airspace Link Code Challenge
 
-> [To view the instructions for this challenge click here.](./engineering-challenge/README.md#$Description)
+> [To view the instructions for this challenge click here.](./documentation/engineering-challenge_README.md#Description)
 
 The purpose of this application is to provide a drone operator the capability to map potential flight paths in regards to controlled airspace (areas ineligible for drone operations). The FAA GeoJSON da
 ta contains coordinates for the controlled airspace near a given location. This application will determine if the path a user creates breaches this area; and if it does, what the total area of the overlap is.
@@ -76,7 +76,7 @@ ___
 
 ## Features
 
-As per the [requirements of the code challenge](./engineering-challenge/README.md) the MVP of this application should:
+As per the [requirements of the code challenge](./documentation/engineering-challenge_README.md) the MVP of this application should:
 
 - [Display a map centered over the appropriate coordinates.](./documentation/features_map.md#display-a-map-centered-over-the-detroit-metropolitan-airport)
 - [Display the provided GeoJSON data.](./documentation/features_geojson.md#display-the-provided-geojson-data-as-a-polygon)
