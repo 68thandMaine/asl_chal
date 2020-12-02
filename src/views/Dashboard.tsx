@@ -10,7 +10,7 @@ box-shadow: -10px 0px 15px -1px rgba(68, 68, 68, 0.6);
 
 type DashboardProps ={
 	leftPane: ReactChild;
-	rightPane: ReactChild
+	rightPane: ReactChild;
  }
 
 const Dashboard: React.FC<DashboardProps> = ({ leftPane, rightPane }) => {

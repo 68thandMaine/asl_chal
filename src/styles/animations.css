@@ -10,7 +10,8 @@
 
 @keyframes slideUp {
 	0% {
-		height: 100%;
+		height: 150%;
+		top: -4px;
 	}
 	100% {
 		height: 0;

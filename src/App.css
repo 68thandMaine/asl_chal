@@ -81,5 +81,13 @@ input::-webkit-inner-spin-button {
 }
 
 .notification__message {
-	animation: slideRight 3s forwards;
+	animation: slideRight 2.25s forwards;
+}
+
+.notification__remove:before {
+	animation: slideUp 1.75s forwards;
+}
+
+.notification__remove {
+	animation: slideRight 4.5s forwards;
 }

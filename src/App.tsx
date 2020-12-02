@@ -23,14 +23,16 @@ function App() {
 	}
 
 	function onCloseNotification(){
-		setState((prevState) => ({
-			...prevState,
+		console.log("close notification")
+		setState({
+			...state,
 			notification: {
-				...prevState.notification,
+				...state.notification,
 				showNotification: false,
 				message: "",
 			}
-		}));
+		});
+		console.log(state)
 	}
 
 	return (
