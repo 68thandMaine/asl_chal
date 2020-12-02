@@ -2,6 +2,8 @@
 
 ## Draw Shapes of the Flight on the Map
 
-To create the toolbar, I reverse engineered the solution that [Rieux](#references) provided with react leaflet draw to suit my needs.  
+- Use the `createControlComponent` method from `react-leaflet` to build the `Leaflet.Control.Draw` tool.
+- Use the `useLeafletContext` method to access the map layers and use the layer in the Control options object.
+- Trigger specific event with effects when certain map events occur.
 
-### [Back to README](../README.md)
+### [Back to README](../README.md#features)
